@@ -2,15 +2,15 @@
 
 This repository powers an interactive visual embedding browser for my drawing portfolio at [projector.andrewlook.com](http://projector.andrewlook.com).
 
-<p align="center">
-  <img src="https://github.com/andrewlook/portfolio_tsne_projector/blob/master/static/demo.gif?raw=true" alt="Visualising Example"/>
-</p>
+I adapted this repo to include my own data, and also to modify the underlying GUI code. Specifically, the image view in the left-hand inspector panel was available in the official tensorboard release inside of [vz-projector-inspector-panel.ts](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/plugins/projector/vz_projector/vz-projector-inspector-panel.ts#L287) and [vz-projector-inspector-panel.html.ts](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/plugins/projector/vz_projector/vz-projector-inspector-panel.html.ts), but not in the compiled standalone version.
+
+![inspector panel with image sprites](./static/inspector-panel.png)
 
 This repository is based on [TSNE-UMAP-Embedding-Visualisation](https://github.com/harveyslash/TSNE-UMAP-Embedding-Visualisation) by [Harshvardhan Gupta](https://github.com/harveyslash), which is a better-documented version of [Tensorflow's Standalone Embedding Projector](https://github.com/tensorflow/embedding-projector-standalone). The underlying code (not standalone) lives in the tensorflow repo under [tensorboard/plugins/projector](https://github.com/tensorflow/tensorboard/tree/master/tensorboard/plugins/projector).
 
-I adapted this repo to include my own data, and also to modify the underlying GUI code. Specifically, the image view in the left-hand inspector panel was available in the official tensorboard release inside of [vz-projector-inspector-panel.ts](https://github.com/tensorflow/tensorboard/blob/master/tensorboard/plugins/projector/vz_projector/vz-projector-inspector-panel.ts#L287), but not in the compiled standalone version.
-
-![inspector panel with image sprites](./static/inspector-panel.png)
+<p align="center">
+  <img src="https://github.com/andrewlook/portfolio_tsne_projector/blob/master/static/demo.gif?raw=true" alt="Visualising Example"/>
+</p>
 
 ## The Data
 
@@ -66,6 +66,25 @@ A stackoverflow answer clarified how to add multiple metadata columns (alongside
 - [[1802.03426] UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction](https://arxiv.org/abs/1802.03426)
 - [machine learning - How to understand the drawbacks of K-means - Cross Validated](https://stats.stackexchange.com/questions/133656/how-to-understand-the-drawbacks-of-k-means)
 
-## Alternative Approaches
+### Potentially Useful
 
-## Credits
+#### Streamlining Data Prep for Embedding Projector
+
+Ampligraph has a cool utility, [create_tensorboard_visualizations](https://docs.ampligraph.org/en/develop/generated/ampligraph.utils.create_tensorboard_visualizations.html) to streamline creation of the metadata/configs needed to power the embedding projector.
+
+#### 2D TSNE Grid (from ml4a)
+
+Machine Learning for Artists ("ml4a") published some useful jupyter notebooks and guides for rendering sets of images as 2D TSNE images. Specifically, there's a [2D Grid Image TSNE](https://github.com/ml4a/ml4a/blob/master/examples/info_retrieval/image-tsne.ipynb) using [RasterFairy](https://github.com/bmcfee/RasterFairy) to arrange the pointcloud into a 2D grid.
+
+From RasterFairy's description:
+
+> The purpose of Raster Fairy is to transform any kind of 2D point cloud into a regular raster whilst trying to preserve the neighborhood relations that were present in the original cloud. A typical use case is if you have a similarity clustering of images and want to show the images in a regular table structure.
+
+The RasterFairy README has a gif that summarizes this well:
+
+![](http://i.imgur.com/HWOsmGC.gif)
+
+Ml4a also provides some examples of a standalone UI desktop app, using the OpenFrameworks C++ framework to make an interactive, browsable experience in a native application:
+
+- [Image t-SNE viewer](https://ml4a.github.io/guides/ImageTSNEViewer/)
+- [Image t-SNE live](https://ml4a.github.io/guides/ImageTSNELive/)
