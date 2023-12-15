@@ -1,0 +1,8 @@
+embeddings {
+  metadata_path: "oss_data/metadata.tsv"
+  tensor_path: "oss_data/feature_vecs.tsv"
+  sprite: {
+    image_path: "oss_data/sprite.jpeg"
+    single_image_dim: [ 100, 100 ]
+  }
+}
