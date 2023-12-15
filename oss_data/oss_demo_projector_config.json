@@ -2,10 +2,11 @@
   "embeddings": [
     {
       "tensorName": "RIT",
-      "tensorShape": [3979, 2048],
-      "tensorPath": "oss_data/tensor.bytes",
+      "tensorPath": "oss_data/feature_vecs.tsv",
+      "tensorShape": [1923, 512],
+      "metadataPath": "oss_data/metadata.tsv",
       "sprite": {
-        "imagePath": "oss_data/sprites.png",
+        "imagePath": "oss_data/sprite.jpeg",
         "singleImageDim": [100, 100]
       }
     }
