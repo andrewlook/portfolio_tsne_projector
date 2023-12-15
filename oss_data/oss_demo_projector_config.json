@@ -1,7 +1,7 @@
 {
   "embeddings": [
     {
-      "tensorName": "RIT",
+      "tensorName": "SingleLines v1 (2023-12-14)",
       "tensorPath": "oss_data/feature_vecs.tsv",
       "tensorShape": [1923, 512],
       "metadataPath": "oss_data/metadata.tsv",
