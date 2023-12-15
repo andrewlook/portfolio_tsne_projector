@@ -7,27 +7,27 @@
   />
 
   <meta property="og:type" content="article" />
+  <meta property="og:title" content="projector.andrewlook.com" />
   <meta
-    property="og:title"
-    content="Embedding projector - visualization of high-dimensional data"
+    property="og:description"
+    content="Browse Andrew Look's Art Portfolio by Visual Similarity"
   />
-  <meta property="og:description" content="Visualize high dimensional data." />
-  <meta property="og:url" content="http://projector.tensorflow.org" />
+  <meta property="og:url" content="https://projector.andrewlook.com" />
   <meta
     property="og:image"
     content="http://projector.tensorflow.org/preview.png"
   />
 
   <meta name="twitter:card" value="summary_large_image" />
+  <meta name="twitter:title" content="projector.andrewlook.com" />
   <meta
-    name="twitter:title"
-    content="Embedding projector - visualization of high-dimensional data"
+    name="twitter:description"
+    content="Browse Andrew Look's Art Portfolio by Visual Similarity"
   />
-  <meta name="twitter:description" content="Visualize high dimensional data." />
   <meta name="twitter:url" content="http://projector.tensorflow.org" />
   <meta
     name="twitter:image"
-    content="http://projector.tensorflow.org/preview.png"
+    content="https://github.com/andrewlook/portfolio_tsne_projector/blob/master/static/screenshot.png?raw=true"
   />
 
   <meta http-equiv="cache-control" content="max-age=0" />
@@ -36,10 +36,7 @@
   <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
   <meta http-equiv="pragma" content="no-cache" />
 
-  <meta
-    name="author"
-    content="Daniel Smilkov, Nikhil Thorat, Charles Nicholson, Big Picture"
-  />
+  <meta name="author" content="Andrew Look" />
 
   <link rel="icon" type="image/png" href="../favicon.png" />
 
@@ -82787,6 +82784,16 @@ function saxpy(n, a, x, y){
         border-left: 1px solid rgba(0, 0, 0, 0.15);
       }
 
+      .nn-list .sprite-image,
+      .metadata-list .sprite-image {
+        width: 100%;
+      }
+
+      .nn-list.nn-img-show .sprite-image,
+      .metadata-list.nn-img-show .sprite-image {
+        display: block;
+      }
+
       .nn-list .neighbor-link:hover,
       .metadata-list .metadata-link:hover {
         cursor: pointer;
@@ -82809,6 +82816,11 @@ function saxpy(n, a, x, y){
         float: right;
       }
 
+      .neighbor-image-controls {
+        display: flex;
+        padding: 0.8em 0.1em;
+      }
+
       .options a {
         color: #727272;
         font-size: 13px;
@@ -82821,7 +82833,7 @@ function saxpy(n, a, x, y){
       }
 
       .neighbors {
-        margin-bottom: 30px;
+        margin-bottom: 15px;
       }
 
       .neighbors-options {
@@ -82841,7 +82853,7 @@ function saxpy(n, a, x, y){
 
       .nn-slider {
         --paper-slider-input: {
-          width: 64px;
+          width: 72px;
         }
         --paper-input-container-input: {
           font-size: 14px;
@@ -82868,6 +82880,12 @@ function saxpy(n, a, x, y){
       .results {
         display: flex;
         flex-direction: column;
+      }
+
+      .results,
+      .nn,
+      .nn-list {
+        flex: 1 0 100px;
       }
     </style>
     <template>
