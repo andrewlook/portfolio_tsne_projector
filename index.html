@@ -83088,6 +83088,31 @@ function saxpy(n, a, x, y){
               this.neighborsOfFirstPoint
             );
           };
+          d.prototype.spriteImageRenderer = function() {
+            var spriteImagePath = this.spriteMeta.imagePath;
+            var { aspectRatio, nCols } = this.spriteMeta as any;
+            var paddingBottom = 100 / aspectRatio + "%";
+            var nCols100 = nCols * 100;
+            var backgroundSize = nCols100 +"% " + nCols100 + "%";
+            var backgroundImage = "url(${" + CSS.escape(spriteImagePath!) + "})";
+            return function(neighbor) {
+              var spriteElementImage = document.createElement("div");
+              spriteElementImage.className = "sprite-image";
+              spriteElementImage.style.backgroundImage = backgroundImage;
+              spriteElementImage.style.paddingBottom = paddingBottom;
+              spriteElementImage.style.backgroundSize = backgroundSize;
+              var [row, col] = [
+                Math.floor(neighbor.index / nCols),
+                neighbor.index % nCols,
+              ];
+              var [top, left] = [
+                (row / (nCols - 1)) * 100,
+                (col / (nCols - 1)) * 100,
+              ];
+              spriteElementImage.style.backgroundPosition = left} + "% " + top + "%";
+              return spriteElementImage;
+            };
+          };
           d.prototype.datasetChanged = function () {
             this.enableResetFilterButton(!1);
           };
