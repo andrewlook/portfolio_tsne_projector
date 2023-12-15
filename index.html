@@ -83073,6 +83073,7 @@ function saxpy(n, a, x, y){
             } else {
               this.spriteMeta = {};
             }
+            this.showNeighborImages = true;
             this.spriteImagesAvailable = !!this.spriteMeta.imagePath;
 
             if (
@@ -83088,14 +83089,15 @@ function saxpy(n, a, x, y){
               this.neighborsOfFirstPoint
             );
           };
-          d.prototype.spriteImageRenderer = function() {
-            var spriteImagePath = this.spriteMeta.imagePath;
-            var { aspectRatio, nCols } = this.spriteMeta as any;
+          d.prototype.spriteImageRenderer = function () {
+            var g = this;
+            var spriteImagePath = g.spriteMeta.imagePath;
+            var { aspectRatio, nCols } = g.spriteMeta;
             var paddingBottom = 100 / aspectRatio + "%";
             var nCols100 = nCols * 100;
-            var backgroundSize = nCols100 +"% " + nCols100 + "%";
-            var backgroundImage = "url(${" + CSS.escape(spriteImagePath!) + "})";
-            return function(neighbor) {
+            var backgroundSize = nCols100 + "% " + nCols100 + "%";
+            var backgroundImage = "url(" + CSS.escape(spriteImagePath) + ")";
+            return function (neighbor) {
               var spriteElementImage = document.createElement("div");
               spriteElementImage.className = "sprite-image";
               spriteElementImage.style.backgroundImage = backgroundImage;
@@ -83109,7 +83111,8 @@ function saxpy(n, a, x, y){
                 (row / (nCols - 1)) * 100,
                 (col / (nCols - 1)) * 100,
               ];
-              spriteElementImage.style.backgroundPosition = left} + "% " + top + "%";
+              spriteElementImage.style.backgroundPosition =
+                left + "% " + top + "%";
               return spriteElementImage;
             };
           };
@@ -83242,62 +83245,81 @@ function saxpy(n, a, x, y){
           };
           d.prototype.updateNeighborsList = function (e) {
             var g = this,
-              h = this.querySelector(".nn-list");
-            h.innerHTML = "";
+              nnlist = this.querySelector(".nn-list");
+            nnlist.innerHTML = "";
             if (0 === e.length) this.removeContext(".nn");
             else {
               this.addContext(".nn");
               this.searchBox.message = "";
               for (
-                var k = 0 < e.length ? e[0].dist : 0,
-                  l = function (q) {
-                    var p = e[q];
-                    q = document.createElement("div");
-                    q.className = "neighbor";
-                    var t = document.createElement("a");
-                    t.className = "neighbor-link";
-                    t.title = m.getLabelFromIndex(p.index);
-                    var r = document.createElement("div");
-                    r.className = "label-and-value";
-                    var v = document.createElement("div");
-                    v.className = "label";
-                    v.style.color = a.dist2color(m.distFunc, p.dist, k);
-                    v.innerText = m.getLabelFromIndex(p.index);
-                    var u = document.createElement("div");
-                    u.className = "value";
-                    u.innerText = p.dist.toFixed(3);
-                    r.appendChild(v);
-                    r.appendChild(u);
-                    v = document.createElement("div");
-                    v.className = "bar";
-                    u = document.createElement("div");
-                    u.className = "fill";
-                    u.style.borderTopColor = a.dist2color(
-                      m.distFunc,
-                      p.dist,
-                      k
+                var minDist = 0 < e.length ? e[0].dist : 0,
+                  l = function (neighborElement) {
+                    var neighbor = e[neighborElement];
+                    neighborElement = document.createElement("div");
+                    neighborElement.className = "neighbor";
+                    var neighborElementLink = document.createElement("a");
+                    neighborElementLink.className = "neighbor-link";
+                    neighborElementLink.title = m.getLabelFromIndex(
+                      neighbor.index
                     );
-                    u.style.width =
-                      100 * a.normalizeDist(m.distFunc, p.dist, k) + "%";
-                    v.appendChild(u);
-                    for (u = 1; 4 > u; u++) {
+                    var labelValueElement = document.createElement("div");
+                    labelValueElement.className = "label-and-value";
+                    var labelElement = document.createElement("div");
+                    labelElement.className = "label";
+                    labelElement.style.color = a.dist2color(
+                      m.distFunc,
+                      neighbor.dist,
+                      minDist
+                    );
+                    labelElement.innerText = m.getLabelFromIndex(
+                      neighbor.index
+                    );
+                    var valueElement = document.createElement("div");
+                    valueElement.className = "value";
+                    valueElement.innerText = neighbor.dist.toFixed(3);
+                    labelValueElement.appendChild(labelElement);
+                    labelValueElement.appendChild(valueElement);
+                    labelElement = document.createElement("div");
+                    labelElement.className = "bar";
+                    valueElement = document.createElement("div");
+                    valueElement.className = "fill";
+                    valueElement.style.borderTopColor = a.dist2color(
+                      m.distFunc,
+                      neighbor.dist,
+                      minDist
+                    );
+                    valueElement.style.width =
+                      100 *
+                        a.normalizeDist(m.distFunc, neighbor.dist, minDist) +
+                      "%";
+                    labelElement.appendChild(valueElement);
+                    for (valueElement = 1; 4 > valueElement; valueElement++) {
                       var w = document.createElement("div");
                       w.className = "tick";
-                      w.style.left = (100 * u) / 4 + "%";
-                      v.appendChild(w);
+                      w.style.left = (100 * valueElement) / 4 + "%";
+                      labelElement.appendChild(w);
                     }
-                    t.appendChild(r);
-                    t.appendChild(v);
-                    q.appendChild(t);
-                    h.appendChild(q);
-                    t.onmouseenter = function () {
-                      g.projectorEventContext.notifyHoverOverPoint(p.index);
+                    if (g.spriteImagesAvailable && g.showNeighborImages) {
+                      var neighborElementImage =
+                        g.spriteImageRenderer()(neighbor);
+                      neighborElement.appendChild(neighborElementImage);
+                    }
+                    neighborElementLink.appendChild(labelValueElement);
+                    neighborElementLink.appendChild(labelElement);
+                    neighborElement.appendChild(neighborElementLink);
+                    nnlist.appendChild(neighborElement);
+                    neighborElementLink.onmouseenter = function () {
+                      g.projectorEventContext.notifyHoverOverPoint(
+                        neighbor.index
+                      );
                     };
-                    t.onmouseleave = function () {
+                    neighborElementLink.onmouseleave = function () {
                       g.projectorEventContext.notifyHoverOverPoint(null);
                     };
-                    t.onclick = function () {
-                      g.projectorEventContext.notifySelectionChanged([p.index]);
+                    neighborElementLink.onclick = function () {
+                      g.projectorEventContext.notifySelectionChanged([
+                        neighbor.index,
+                      ]);
                     };
                   },
                   m = this,
