@@ -6,7 +6,7 @@
       "tensorShape": [1923, 512],
       "metadataPath": "oss_data/metadata.tsv",
       "sprite": {
-        "imagePath": "oss_data/sprite.jpeg",
+        "imagePath": "oss_data/sprite.png",
         "singleImageDim": [100, 100]
       }
     }
